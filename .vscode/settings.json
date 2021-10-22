@@ -1,1 +1,3 @@
-"python.terminal.activateEnvironment" : true
+{
+    "python.pythonPath": "D:\\repositorios github\\django_project\\venv\\Scripts\\python"
+}
