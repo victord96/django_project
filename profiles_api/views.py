@@ -48,6 +48,8 @@ class HelloApiView(APIView):
 
 class HelloViewSet(viewsets.ViewSet):
     """Test API ViewSet""" 
+
+    serializer_class = serializers.HelloSerializer
          
     def list(self, request):
         """Return Hello World message""" 
@@ -59,3 +61,34 @@ class HelloViewSet(viewsets.ViewSet):
         ]
 
         return Response({'message': 'Hola!', 'a_viewset': a_viewset})
+
+    def create(self, request):
+        """ Create new message Hello World"""
+
+        serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid():
+            name = serializer.validated_data.get('name')
+            message = f'Hello {name}'
+            return Response({'message': message})
+        else:
+            return Response(
+                serializer.errors, status=status.HTTP_400_BAD_REQUEST
+            )   
+
+    def retrieve(self, request, pk=None):
+        """Return an object and the ID"""
+
+        return Response({'http_method': 'GET'})
+
+    def update(self, request, pk=None):
+        """Update and object"""
+        return Response({'http_method': 'PUT'})   
+
+    def partial_update(self, rquest, pk=None):
+        """Update a partial object"""
+        return Response({'http_method': 'PATCH'})
+
+    def destroy(self, request, pk=None):
+        """Destroy an object"""
+        return Response({'http_method': 'DELETE'})
